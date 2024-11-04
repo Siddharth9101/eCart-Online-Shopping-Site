@@ -1,0 +1,23 @@
+User Schema = {
+email,
+name,
+password,
+wishlist,
+cart,
+profile picture
+}
+
+product = {
+name,
+price,
+category,
+colour,
+size,
+}
+
+category = {
+    name,
+    products
+}
+
+

@@ -1,8 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const apiRouter = require("./routes/index.js");
 
 const app = express();
+
+// connecting to the database
 try {
   mongoose.connect(process.env.DB_URL);
   console.log("Connected to the database");
@@ -10,10 +15,15 @@ try {
   console.error("Error while connecting to the database");
 }
 
-app.use(express.json());
+// middlewares
+app.use(cors());
+app.use(bodyParser.json());
+app.use("/api/v1", apiRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+// Global Catch (this will hit if there is any error in the backend)
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: "Something went wrong" });
 });
 
 app.listen(3000, () => {
