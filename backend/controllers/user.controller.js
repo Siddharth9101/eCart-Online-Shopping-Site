@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { User } = require("../models.js");
-const { signupUserSchema, signinUserSchema } = require("../types.js");
 const salt = bcrypt.genSaltSync(10);
 
 const signupHandler = async (req, res) => {
@@ -66,7 +65,7 @@ const signinHandler = async (req, res) => {
       wishlist: userAlreadyExists.wishlist,
       cart: userAlreadyExists.cart,
     },
-    salt
+    process.env.JWT_SECRET
   );
 
   res.status(200).json({ token });
